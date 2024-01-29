@@ -2,7 +2,7 @@ import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@
 import { useState } from "react";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assests/constants";
 
-export default function PostFooter() {
+export default function PostFooter({username}) {
   const [isLiked, setIsLiked] = useState(false);
   const [numberOfLikes, setNumberOfLikes] = useState(1525);
 
@@ -33,9 +33,9 @@ export default function PostFooter() {
       </Text>
 
       <Text fontSize={"sm"} fontWeight={700}>
-        oceanpearl_ {" "}
+        {username}_ {" "}
         <Text as="span" fontWeight={400}>
-          Power of hazel
+          Here is my first post!
         </Text>
       </Text>
 
