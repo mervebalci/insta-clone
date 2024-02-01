@@ -30,7 +30,7 @@ export default function Sidebar() {
     {
       icon: <Avatar size={"sm"} name="Efes" src="/profilepic.png" />,
       text: "Profile",
-      link: "/profile"
+      link: "/efesthewhite"
     },
   ];
 
