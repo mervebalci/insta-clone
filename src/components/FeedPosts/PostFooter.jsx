@@ -2,7 +2,7 @@ import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@
 import { useState } from "react";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assests/constants";
 
-export default function PostFooter({username}) {
+export default function PostFooter({ username, isProfilePage }) {
   const [isLiked, setIsLiked] = useState(false);
   const [numberOfLikes, setNumberOfLikes] = useState(1525);
 
@@ -17,7 +17,7 @@ export default function PostFooter({username}) {
   }
 
   return (
-    <Box mb={10}>
+    <Box mb={10} marginTop={"auto"}>
       <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={4}>
         <Box onClick={handleLike} cursor={"pointer"} fontSize={18}>
           {!isLiked ? (<NotificationsLogo />) : (<UnlikeLogo />)}
@@ -32,16 +32,21 @@ export default function PostFooter({username}) {
         {numberOfLikes} likes
       </Text>
 
-      <Text fontSize={"sm"} fontWeight={700}>
-        {username}_ {" "}
-        <Text as="span" fontWeight={400}>
-          Here is my first post!
-        </Text>
-      </Text>
+      {!isProfilePage && (
+        <>
+          <Text fontSize={"sm"} fontWeight={700}>
+            {username}_ {" "}
+            <Text as="span" fontWeight={400}>
+              Here is my first post!
+            </Text>
+          </Text>
 
-      <Text fontSize={"sm"} color={"gray"}>
-        View all the comments
-      </Text>
+          <Text fontSize={"sm"} color={"gray"}>
+            View all the comments
+          </Text>
+        </>
+      )}
+
 
       <Flex alignItems={"center"} gap={2} justifyContent={"space-between"} w={"full"}>
         <InputGroup>
