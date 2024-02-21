@@ -1,9 +1,11 @@
 import { useToast } from "@chakra-ui/react";
+import { useCallback } from "react";
 
 export default function useShowToast() {
   const toast = useToast();
 
-  function showToast(title, description, status) {
+  // useCallback is used to PREVENT infinite loop by caching the function, because toast is a function
+  const showToast = useCallback((title, description, status) => {
     toast({
       title: title,
       description: description,
@@ -11,7 +13,7 @@ export default function useShowToast() {
       duration: 3000,
       isClosable: true,
     });
-  };
+  }, [toast]);
 
-  return showToast
+  return showToast;
 }
