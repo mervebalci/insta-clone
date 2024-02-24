@@ -21,9 +21,9 @@ export default function SuggestedUsers() {
       <SuggestedUser name="Christian Nwamba" followers={3542} avatar="https://bit.ly/code-beast" />
 
       <Box fontSize={12} color={"gray.500"} mt={5} alignSelf={"start"}>
-        © 2023 Built By {" "}
+        © 2024 Built By {" "}
         <Link href="https://github.com/mervebalci" target="_black" color={"blue.500"} fontSize={14}>
-          Efes
+          MB
         </Link>
       </Box>
     </VStack>
