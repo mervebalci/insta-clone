@@ -36,17 +36,17 @@ export default function useFollowUser(userId) {
           ...authUser,
           following: authUser.following.filter((uid) => uid !== userId),
         });
-        if (userProfile) {
+        if (userProfile)
           setUserProfile({
             ...userProfile,
             followers: userProfile.followers.filter((uid) => uid !== authUser.uid),
           });
 
-          localStorage.setItem("user-info", JSON.stringify({
-            ...authUser,
-            following: authUser.following.filter((uid) => uid !== userId),
-          }));
-        }
+        localStorage.setItem("user-info", JSON.stringify({
+          ...authUser,
+          following: authUser.following.filter((uid) => uid !== userId),
+        }));
+
         setIsFollowing(false);
 
       } else {
@@ -56,17 +56,17 @@ export default function useFollowUser(userId) {
           following: [...authUser.following, userId],
         });
 
-        if (userProfile) {
+        if (userProfile)
           setUserProfile({
             ...userProfile,
             followers: [...userProfile.followers, authUser.uid],
           });
   
-          localStorage.setItem("user-info", JSON.stringify({
-            ...authUser,
-            following: [...authUser.following, userId],
-          }));
-        }
+        localStorage.setItem("user-info", JSON.stringify({
+          ...authUser,
+          following: [...authUser.following, userId],
+        }));
+        
         setIsFollowing(true);
       }
 

@@ -11,6 +11,7 @@ export default function useSearchUser() {
   async function getUserProfile(username) {
     setIsLoading(true);
     setUser(null);
+    
     try {
       const q = query(collection(firestore, "users"), where("username", "==", username));
 
