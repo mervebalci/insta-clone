@@ -6,8 +6,6 @@ import useLogout from "../../hooks/useLogout";
 import SidebarItems from "./SidebarItems";
 
 export default function Sidebar() {
-
-
   const {handleLogout, isLoggingOut} = useLogout();
 
   return (

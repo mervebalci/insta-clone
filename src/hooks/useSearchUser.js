@@ -10,6 +10,7 @@ export default function useSearchUser() {
 
   async function getUserProfile(username) {
     setIsLoading(true);
+    setUser(null);
     try {
       const q = query(collection(firestore, "users"), where("username", "==", username));
 
@@ -17,12 +18,12 @@ export default function useSearchUser() {
       if (querySnapshot.empty) return showToast("Error", "User not found", "error");
 
       querySnapshot.forEach((doc) => {
-        setUser(doc.data())
+        setUser(doc.data());
       });
 
     } catch (error) {
       showToast("Error", error.message, "error");
-      setUser(null)
+      setUser(null);
     } finally {
       setIsLoading(false);
     }
