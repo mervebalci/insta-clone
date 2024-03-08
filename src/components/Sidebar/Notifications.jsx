@@ -1,5 +1,5 @@
 import { Box, Flex, Tooltip } from "@chakra-ui/react";
-import { NotificationsLogo } from "../../assests/constants";
+import { NotificationsLogo } from "../../assets/constants";
 
 export default function Notifications() {
   return (
