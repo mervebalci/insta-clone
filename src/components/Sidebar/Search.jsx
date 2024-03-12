@@ -17,8 +17,6 @@ export default function Search() {
     getUserProfile(searchRef.current.value);
   }
 
-  console.log(user);
-
   return (
     <>
       <Tooltip
