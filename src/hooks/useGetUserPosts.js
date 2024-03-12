@@ -25,9 +25,10 @@ export default function useGetUserPosts() {
       setPosts([]);
 
       try {
-        const q = query(collection(firestore, "posts"), where("createdBy", "==", "userProfile.uid"));
+        const q = query(collection(firestore, "posts"), where("createdBy", "==", userProfile.uid));
         const querySnapshot = await getDocs(q);
 
+        console.log(querySnapshot)
         const posts = [];
         querySnapshot.forEach((doc) => {
           posts.push({...doc.data(), id: doc.id});
