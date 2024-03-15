@@ -6,6 +6,12 @@ import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPosts/PostFooter";
 import useUserProfileStore from "../../store/userProfileStore";
 import useAuthStore from "../../store/authStore";
+import useShowToast from "../../hooks/useShowToast";
+import { useState } from "react";
+import { deleteObject, ref } from "firebase/storage";
+import { firestore, storage } from "../../firebase/firebase";
+import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import usePostStore from "../../store/postStore";
 
 export default function ProfilePost({ post }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -13,6 +19,43 @@ export default function ProfilePost({ post }) {
   const userProfile = useUserProfileStore((state) => state.userProfile);
 
   const authUser = useAuthStore((state) => state.user);
+
+  const showToast = useShowToast();
+
+  const [isDeleting, setIsDeleting] = useState(false);
+  const deletePost = usePostStore((state) => state.deletePost);
+  const decrementPostsCount = useUserProfileStore((state) => state.deletePost);
+
+  async function handleDeletePost() {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+    // After the question is asked, if user cancel it, return out of the function
+    
+    // If the delete button is clicked again, return out of the function
+    if (isDeleting) return;
+
+    try {
+      // First, the image will be deleted from the storage.
+      const imageRef = ref(storage, `posts/${post.id}`);
+      await deleteObject(imageRef);    // post.id to be deleted
+
+      // Then, the post will be deleted from posts collection.
+      const userRef = doc(firestore, "users", authUser.uid);
+      await deleteDoc(doc(firestore, "posts", post.id));   // userRef to be updated
+
+      // And then, it will be deleted from users collection.
+      await updateDoc(userRef, {posts: arrayRemove(post.id)});
+
+
+      deletePost(post.id);
+      decrementPostsCount(post.id);
+      showToast("Success", "Post deleted successfully!", "success")
+
+    } catch (error) {
+      showToast("Error", error.message, "error")
+    } finally {
+      setIsDeleting(false);
+    }
+  }
 
   return (
     <>
@@ -93,6 +136,8 @@ export default function ProfilePost({ post }) {
                       _hover={{bg: "whiteAlpha.300", color: "red.600"}}
                       borderRadius={4}
                       p={1}
+                      onClick={handleDeletePost}
+                      isLoading={isDeleting}
                     >
                       <MdDelete size={20} cursor={"pointer"} />
                     </Button>
