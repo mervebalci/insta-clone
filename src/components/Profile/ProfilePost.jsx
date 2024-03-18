@@ -12,6 +12,7 @@ import { deleteObject, ref } from "firebase/storage";
 import { firestore, storage } from "../../firebase/firebase";
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import usePostStore from "../../store/postStore";
+import Caption from "../Comment/Caption";
 
 export default function ProfilePost({ post }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -147,7 +148,11 @@ export default function ProfilePost({ post }) {
                 <Divider my={4} bg={"gray.500"} />
                 
                 <VStack w={"full"} alignItems={"start"} maxH={"350px"} overflow={"auto"}>
-                  {post.comments.map(comment => (
+                  {/* CAPTION */}
+                  {post.caption && <Caption post={post} />}
+
+                  {/* COMMENTS */}
+                  {post.comments.map((comment) => (
                     <Comment key={comment.id} comment={comment} />
                   ))}
                 </VStack>

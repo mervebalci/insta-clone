@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constants";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
@@ -11,6 +11,9 @@ export default function PostFooter({ post, username, isProfilePage }) {
   const [comment, setComment] = useState("");
 
   const authUser = useAuthStore((state) => state.user);
+
+  // To make the cursor focus on Adding a comment..., when user clicks on comment logo
+  const commentRef = useRef(null);
 
   async function handleSubmitComment() {
     await handlePostComment(post.id, comment);
@@ -34,7 +37,8 @@ export default function PostFooter({ post, username, isProfilePage }) {
           {!isLiked ? (<NotificationsLogo />) : (<UnlikeLogo />)}
         </Box>
 
-        <Box cursor={"pointer"} fontSize={18}>
+        {/* To make the cursor focus on Adding a comment..., when user clicks on comment logo */}
+        <Box cursor={"pointer"} fontSize={18} onClick={() => commentRef.current.focus()}>
           <CommentLogo />
         </Box>
       </Flex>
@@ -68,7 +72,8 @@ export default function PostFooter({ post, username, isProfilePage }) {
               fontSize={14}
               onChange={(e) => setComment(e.target.value)}
               value={comment}
-            />
+              ref={commentRef}
+            />            
             <InputRightElement>
               <Button
                 fontSize={14}
