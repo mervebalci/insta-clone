@@ -147,38 +147,14 @@ export default function ProfilePost({ post }) {
                 <Divider my={4} bg={"gray.500"} />
                 
                 <VStack w={"full"} alignItems={"start"} maxH={"350px"} overflow={"auto"}>
-                  <Comment 
-                    createdAt={"1d ago"}
-                    username={"codebeast"}
-                    profilePic={"https://bit.ly/code-beast"}
-                    text={"Dummy images from unsplash 👍"}
-                  />
-
-                  <Comment 
-                    createdAt={"12h ago"}
-                    username={"abramov"}
-                    profilePic={"https://bit.ly/dan-abramov"}
-                    text={"Have fun with coding 😎"}
-                  />
-
-                  <Comment 
-                    createdAt={"3h ago"}
-                    username={"ryanflorence"}
-                    profilePic={"https://bit.ly/ryan-florence"}
-                    text={"Good clone dude 😛"}
-                  />
-
-                  <Comment 
-                    createdAt={"35m ago"}
-                    username={"kentdodds"}
-                    profilePic={"https://bit.ly/kent-c-dodds"}
-                    text={"Bravo 👏"}
-                  />
+                  {post.comments.map(comment => (
+                    <Comment key={comment.id} comment={comment} />
+                  ))}
                 </VStack>
 
                 <Divider my={4} bg={"gray.800"} />
 
-                <PostFooter isProfilePage={true} />
+                <PostFooter isProfilePage={true} post={post} />
               </Flex>
             </Flex>
           </ModalBody>
