@@ -3,10 +3,9 @@ import { useRef, useState } from "react";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constants";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
+import useLikePost from "../../hooks/useLikePost";
 
 export default function PostFooter({ post, username, isProfilePage }) {
-  const [isLiked, setIsLiked] = useState(false);
-  const [numberOfLikes, setNumberOfLikes] = useState(1525);
   const {isCommenting, handlePostComment} = usePostComment();
   const [comment, setComment] = useState("");
 
@@ -15,26 +14,18 @@ export default function PostFooter({ post, username, isProfilePage }) {
   // To make the cursor focus on Adding a comment..., when user clicks on comment logo
   const commentRef = useRef(null);
 
+	const { handleLikePost, isLiked, likes } = useLikePost(post);
+
   async function handleSubmitComment() {
     await handlePostComment(post.id, comment);
     setComment("");
   };
 
-  function handleLike() {
-    if (isLiked) {
-      setIsLiked(false);
-      setNumberOfLikes(numberOfLikes - 1);
-    } else {
-      setIsLiked(true);
-      setNumberOfLikes(numberOfLikes + 1);
-    }
-  };
-
   return (
     <Box mb={10} marginTop={"auto"}>
       <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={4}>
-        <Box onClick={handleLike} cursor={"pointer"} fontSize={18}>
-          {!isLiked ? (<NotificationsLogo />) : (<UnlikeLogo />)}
+        <Box onClick={handleLikePost} cursor={"pointer"} fontSize={18}>
+					{!isLiked ? <NotificationsLogo /> : <UnlikeLogo />}
         </Box>
 
         {/* To make the cursor focus on Adding a comment..., when user clicks on comment logo */}
@@ -44,7 +35,7 @@ export default function PostFooter({ post, username, isProfilePage }) {
       </Flex>
 
       <Text fontWeight={600} fontSize={"sm"}>
-        {numberOfLikes} likes
+        {likes} likes
       </Text>
 
       {!isProfilePage && (
