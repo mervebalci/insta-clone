@@ -157,7 +157,7 @@ export default function ProfilePost({ post }) {
                   ))}
                 </VStack>
 
-                <Divider my={4} bg={"gray.800"} />
+                <Divider my={4} bg={"gray.8000"} />
 
                 <PostFooter isProfilePage={true} post={post} />
               </Flex>
