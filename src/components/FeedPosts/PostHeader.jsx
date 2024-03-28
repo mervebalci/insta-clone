@@ -1,7 +1,12 @@
-import { Avatar, Box, Flex, Skeleton, SkeletonCircle, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import useFollowUser from "../../hooks/useFollowUser";
 
 export default function PostHeader({ post, creatorProfile }) {
+  // To function the "Follow" button in the feed post header,
+  // as calling the user that we would like to follow => post.createdBy
+  const { isUpdating, isFollowing, handleFollowUser } = useFollowUser(post.createdBy);
+
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"} my={2}>
       <Flex alignItems={"center"} gap={2}>
@@ -26,15 +31,19 @@ export default function PostHeader({ post, creatorProfile }) {
       </Flex>
 
       <Box cursor={"pointer"}>
-        <Text 
+        <Button
+          size={"xs"}
+          bg={"transparent"}
           fontSize={12} 
           color={"blue.500"} 
           fontWeight={"bold"} 
           _hover={{color: "white"}}
           transition={"0.2s ease-in-out"}
+          onClick={handleFollowUser}
+          isLoading={isUpdating}
         >
-          Unfollow
-        </Text>
+          {isFollowing ? "Unfollow" : "Follow"}
+        </Button>
       </Box>
     </Flex>
   )
