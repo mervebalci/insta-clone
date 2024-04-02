@@ -4,8 +4,10 @@ import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constan
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
 import useLikePost from "../../hooks/useLikePost";
+import { timeAgo } from "../../utils/timeAgo";
 
-export default function PostFooter({ post, username, isProfilePage }) {
+export default function PostFooter({ post, isProfilePage, creatorProfile }) {
+  console.log(creatorProfile)
   const {isCommenting, handlePostComment} = usePostComment();
   const [comment, setComment] = useState("");
 
@@ -38,18 +40,29 @@ export default function PostFooter({ post, username, isProfilePage }) {
         {likes} likes
       </Text>
 
+      {/* Displaying created time of the post only in Profile Page */}
+      {isProfilePage && (
+        <Text fontSize={12} color={"gray"}>
+          Posted {timeAgo(post.createdAt)}
+        </Text>
+      )}
+
+
+      {/* Displaying the username, post caption and comments in Home page */}
       {!isProfilePage && (
         <>
           <Text fontSize={"sm"} fontWeight={700}>
-            {username}_ {" "}
+            {creatorProfile.userProfile?.username}{" "}
             <Text as="span" fontWeight={400}>
-              Here is my first post!
+              {post.caption}
             </Text>
           </Text>
 
-          <Text fontSize={"sm"} color={"gray"}>
-            View all the comments
-          </Text>
+          {post.comments.length > 0 && (
+            <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
+              View all {post.comments.length} comments
+            </Text>
+          )}
         </>
       )}
 
