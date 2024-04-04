@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, Flex, Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useFollowUser from "../../hooks/useFollowUser";
+import { timeAgo } from "../../utils/timeAgo";
 
 export default function PostHeader({ post, creatorProfile }) {
   // To function the "Follow" button in the feed post header,
@@ -26,7 +27,7 @@ export default function PostHeader({ post, creatorProfile }) {
           ) : (
             <Skeleton w={"100px"} h={"10px"} />
           )}
-          <Box color={"gray.500"}>• 1w</Box>
+          <Box color={"gray.500"}>• {timeAgo(post.createdAt)}</Box>
         </Flex>
       </Flex>
 
